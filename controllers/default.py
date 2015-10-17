@@ -79,11 +79,12 @@ def delete_disciplina():
  Definindo as funções do objeto Cidade.
 """
 def insert_cidade():
+
+    titulo = 'Cadastro de cidades'
     form = SQLFORM(Cidade)
 
     if form.process().accepted:
         response.flash = 'Gravado com sucesso'
-        redirect(URL('view_cidade'))
     elif form.errors:
         response.flash = 'Erros no formulário'
     else:
@@ -103,8 +104,9 @@ def update_cidade():
     return dict(form=form)
 
 def view_cidade():
-    cidade = db(Cidade.id > 0).select()
-    return dict(mensagem=cidade)
+    response.title += '| Fórum' # Identifica o nome da aba da página
+    cidades = db(Cidade.id > 0).select()
+    return dict(cidades=cidades)
 
 def delete_cidade():
     id_cidade = request.args(0, cast=int)
@@ -290,7 +292,7 @@ def update_forum():
 
 def view_forum():
     forum = db(Forum.id > 0).select()
-    return dict(mensagem=forum)
+    return dict(forum=forum)
 
 def delete_forum():
     id_forum = request.args(0, cast=int)
