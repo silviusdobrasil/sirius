@@ -1,0 +1,933 @@
+(dp1
+S'output'
+p2
+S'<class \'gluon.contrib.pg8000.ProgrammingError\'> (\'ERRO\', \'42P07\', \'rela\\xc3\\xa7\\xc3\\xa3o "auth_user" j\\xc3\\xa1 existe\')'
+p3
+sS'layer'
+p4
+S'D:\\CursoWeb2py\\web2py\\applications\\sirius\\models\\db.py'
+p5
+sS'code'
+p6
+S"# -*- coding: utf-8 -*-\n\n#########################################################################\n## This scaffolding model makes your app work on Google App Engine too\n## File is released under public domain and you can use without limitations\n#########################################################################\n\n## if SSL/HTTPS is properly configured and you want all HTTP requests to\n## be redirected to HTTPS, uncomment the line below:\n# request.requires_https()\n\n## app configuration made easy. Look inside private/appconfig.ini\nfrom gluon.contrib.appconfig import AppConfig\n## once in production, remove reload=True to gain full speed\nmyconf = AppConfig(reload=True)\n\n\nif not request.env.web2py_runtime_gae:\n    ## if NOT running on Google App Engine use SQLite or other DB\n    db = DAL(myconf.take('db.uri'), pool_size=myconf.take('db.pool_size', cast=int), check_reserved=['all'])\nelse:\n    ## connect to Google BigTable (optional 'google:datastore://namespace')\n    db = DAL('google:datastore+ndb')\n    ## store sessions and tickets there\n    session.connect(request, response, db=db)\n    ## or store session in Memcache, Redis, etc.\n    ## from gluon.contrib.memdb import MEMDB\n    ## from google.appengine.api.memcache import Client\n    ## session.connect(request, response, db = MEMDB(Client()))\n\n## by default give a view/generic.extension to all actions from localhost\n## none otherwise. a pattern can be 'controller/function.extension'\nresponse.generic_patterns = ['*'] if request.is_local else []\n## choose a style for forms\nresponse.formstyle = myconf.take('forms.formstyle')  # or 'bootstrap3_stacked' or 'bootstrap2' or other\nresponse.form_label_separator = myconf.take('forms.separator')\n\n\n## (optional) optimize handling of static files\n# response.optimize_css = 'concat,minify,inline'\n# response.optimize_js = 'concat,minify,inline'\n## (optional) static assets folder versioning\n# response.static_version = '0.0.0'\n#########################################################################\n## Here is sample code if you need for\n## - email capabilities\n## - authentication (registration, login, logout, ... )\n## - authorization (role based authorization)\n## - services (xml, csv, json, xmlrpc, jsonrpc, amf, rss)\n## - old style crud actions\n## (more options discussed in gluon/tools.py)\n#########################################################################\n\nfrom gluon.tools import Auth, Service, PluginManager, Crud\n\ncrud = Crud(db)\nauth = Auth(db)\nservice = Service()\nplugins = PluginManager()\n\nauth.settings.extra_fields['auth_user'] = [\n    Field('img_usuario','upload'),\n    Field('data_nascimento', 'date')\n]\n\n## create all tables needed by auth if not custom tables\nauth.define_tables(username=False, signature=False)\n\n## configure email\nmail = auth.settings.mailer\nmail.settings.server = 'logging' if request.is_local else myconf.take('smtp.server')\nmail.settings.sender = myconf.take('smtp.sender')\nmail.settings.login = myconf.take('smtp.login')\n\n## configure auth policy\nauth.settings.registration_requires_verification = False #Default False\nauth.settings.registration_requires_approval = False\nauth.settings.reset_password_requires_verification = True\nauth.messages.invalid_login = 'Usu\xc3\xa1rio ou senha est\xc3\xa3o incorretos!' # Altera mensagem de login caso seja inv\xc3\xa1lido.\n\n#########################################################################\n## Define your tables below (or better in another model file) for example\n##\n## >>> db.define_table('mytable',Field('myfield','string'))\n##\n## Fields can be 'string','text','password','integer','double','boolean'\n##       'date','time','datetime','blob','upload', 'reference TABLENAME'\n## There is an implicit 'id integer autoincrement' field\n## Consult manual for more options, validators, etc.\n##\n## More API examples for controllers:\n##\n## >>> db.mytable.insert(myfield='value')\n## >>> rows=db(db.mytable.myfield=='value').select(db.mytable.ALL)\n## >>> for row in rows: print row.id, row.myfield\n#########################################################################\n\n## after defining tables, uncomment below to enable auditing\n# auth.enable_record_versioning(db)\n"
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'gluon.contrib.pg8000'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of ProgrammingError object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of ProgrammingError object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of ProgrammingError object>'
+p19
+sS'__dict__'
+p20
+S'{}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of ProgrammingError object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S"<method-wrapper '__init__' of ProgrammingError object>"
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of ProgrammingError object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of ProgrammingError object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of ProgrammingError object>'
+p35
+sS'__class__'
+p36
+S"<class 'gluon.contrib.pg8000.ProgrammingError'>"
+p37
+sS'__doc__'
+p38
+S"'Generic exception raised for programming errors....http://www.python.org/dev/peps/pep-0249/>`_.\\n    '"
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of ProgrammingError object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of ProgrammingError object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of ProgrammingError object>"
+p45
+sS'args'
+p46
+S'(\'ERRO\', \'42P07\', \'rela\\xc3\\xa7\\xc3\\xa3o "auth_user" j\\xc3\\xa1 existe\')'
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'__unicode__'
+p50
+S'<built-in method __unicode__ of ProgrammingError object>'
+p51
+sS'__delattr__'
+p52
+S"<method-wrapper '__delattr__' of ProgrammingError object>"
+p53
+sS'__repr__'
+p54
+S"<method-wrapper '__repr__' of ProgrammingError object>"
+p55
+sS'__hash__'
+p56
+S"<method-wrapper '__hash__' of ProgrammingError object>"
+p57
+ssS'evalue'
+p58
+S'(\'ERRO\', \'42P07\', \'rela\\xc3\\xa7\\xc3\\xa3o "auth_user" j\\xc3\\xa1 existe\')'
+p59
+sS'request'
+p60
+cgluon.html
+XML_unpickle
+p61
+(S's\x84W\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>sirius</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>appadmin</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-00f51804-0d49-4bf7-a567-3138541b1d84<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-eb23a4a0-5639-41d9-a1c9-76e0035f3e03<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-eb23a4a0-5639-41d9-a1c9-76e0035f3e03; session_id_admin=127.0.0.1-00f51804-0d49-4bf7-a567-3138541b1d84</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/admin/default/design/sirius</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 10.0; rv:41.0) Gecko/20100101 Firefox/41.0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/sirius/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>55094</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>DESKTOP-0B3EOQ6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;D:\\\\CursoWeb2py\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;D:\\\\CursoWeb2py\\\\web2py\\\\applications\\\\sirius\\\\&#x27;, &#x27;D:\\\\CursoWeb2py\\\\web2py\\\\applications\\\\welcome\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2653a30: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;2001:0:9d38:90d7:61:2419:44a1:ec9a&#x27;, &#x27;192.168.0.13&#x27;, &#x27;fe80::f581:292a:352:681%2&#x27;, &#x27;fe80::61:2419:44a1:ec9a%3&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;DESKTOP-0B3EOQ6&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;D:\\\\CursoWeb2py\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-eb23a4a0-5639-41d9-a1c9-76e0035f3e03; session_id_admin=127.0.0.1-00f51804-0d49-4bf7-a567-3138541b1d84</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/admin/default/design/sirius</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 10.0; rv:41.0) Gecko/20100101 Firefox/41.0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>2001:0:9d38:90d7:61:2419:44a1:ec9a</div></td></tr><tr><td><div>fe80::61:2419:44a1:ec9a%3</div></td></tr><tr><td><div>DESKTOP-0B3EOQ6</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>fe80::f581:292a:352:681%2</div></td></tr><tr><td><div>192.168.0.13</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/sirius/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>55094</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/sirius/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>DESKTOP-0B3EOQ6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.12.3-stable+timestamp.2015.08.19.00.18.03</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x0154D0D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x025DA030&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x02AE6EF0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x0154D0D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x025DA030&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x02AE6EF0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py\\applications\\sirius\\</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;D:\\\\CursoWeb2py\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;D:\\\\CursoWeb2py\\\\web2py\\\\applications\\\\sirius\\\\&#x27;, &#x27;D:\\\\CursoWeb2py\\\\web2py\\\\applications\\\\welcome\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2653a30: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;2001:0:9d38:90d7:61:2419:44a1:ec9a&#x27;, &#x27;192.168.0.13&#x27;, &#x27;fe80::f581:292a:352:681%2&#x27;, &#x27;fe80::61:2419:44a1:ec9a%3&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;DESKTOP-0B3EOQ6&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;D:\\\\CursoWeb2py\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>2001:0:9d38:90d7:61:2419:44a1:ec9a</div></td></tr><tr><td><div>fe80::61:2419:44a1:ec9a%3</div></td></tr><tr><td><div>DESKTOP-0B3EOQ6</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>fe80::f581:292a:352:681%2</div></td></tr><tr><td><div>192.168.0.13</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.12.3-stable+timestamp.2015.08.19.00.18.03</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 10, 17, 22, 18, 40, 118000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/sirius/appadmin/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2015, 10, 18, 1, 18, 40, 118000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x079B1750&gt;</div></td></tr></table></div>'
+tRp62
+sS'frames'
+p63
+(lp64
+(dp65
+S'file'
+p66
+S'D:\\CursoWeb2py\\web2py\\gluon\\restricted.py'
+p67
+sS'dump'
+p68
+(dp69
+S'environment'
+p70
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}"
+p71
+sS'ccode'
+p72
+S'<code object <module> at 075C10F8, file "D:\\Curs...eb2py\\applications\\sirius\\models\\db.py", line 13>'
+p73
+ssS'lnum'
+p74
+I227
+sS'lines'
+p75
+(dp76
+I224
+S'            ccode = code'
+p77
+sI225
+S'        else:'
+p78
+sI226
+S'            ccode = compile2(code, layer)'
+p79
+sI227
+S'        exec ccode in environment'
+p80
+sI228
+S'    except HTTP:'
+p81
+sI229
+S'        raise'
+p82
+sI230
+S'    except RestrictedError:'
+p83
+sI231
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p84
+sI222
+S'    try:'
+p85
+sI223
+S'        if isinstance(code, types.CodeType):'
+p86
+ssS'call'
+p87
+S"(code='# -*- coding: utf-8 -*-\\n\\n#######################...ble auditing\\n# auth.enable_record_versioning(db)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}, layer=r'D:\\CursoWeb2py\\web2py\\applications\\sirius\\models\\db.py')"
+p88
+sS'func'
+p89
+S'restricted'
+p90
+sa(dp91
+g66
+S'D:\\CursoWeb2py\\web2py\\applications\\sirius\\models\\db.py'
+p92
+sg68
+(dp93
+S'username'
+p94
+S'undefined'
+p95
+sS'auth.define_tables'
+p96
+S'<bound method Auth.define_tables of <gluon.tools.Auth object>>'
+p97
+sS'builtinFalse'
+p98
+S'False'
+p99
+sS'auth'
+p100
+S'<gluon.tools.Auth object>'
+p101
+sS'signature'
+p102
+g95
+ssg74
+I67
+sg75
+(dp103
+I64
+S']'
+sI65
+S''
+sI66
+S'## create all tables needed by auth if not custom tables'
+p104
+sI67
+S'auth.define_tables(username=False, signature=False)'
+p105
+sI68
+S''
+sI69
+S'## configure email'
+p106
+sI70
+S'mail = auth.settings.mailer'
+p107
+sI71
+S"mail.settings.server = 'logging' if request.is_local else myconf.take('smtp.server')"
+p108
+sI62
+S"    Field('img_usuario','upload'),"
+p109
+sI63
+S"    Field('data_nascimento', 'date')"
+p110
+ssg87
+S'()'
+p111
+sg89
+S'<module>'
+p112
+sa(dp113
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\tools.py'
+p114
+sg68
+(dp115
+S'builtinformat'
+p116
+S'<built-in function format>'
+p117
+ssg74
+I2057
+sg75
+(dp118
+I2052
+S'                    *extra_fields,'
+p119
+sI2053
+S'                    **dict('
+p120
+sI2054
+S'                        migrate=self.__get_migrate(settings.table_user_name,'
+p121
+sI2055
+S'                                                   migrate),'
+p122
+sI2056
+S'                        fake_migrate=fake_migrate,'
+p123
+sI2057
+S"                        format='%(first_name)s %(last_name)s (%(id)s)'))"
+p124
+sI2058
+S"        reference_table_user = 'reference %s' % settings.table_user_name"
+p125
+sI2059
+S'        if not settings.table_group_name in db.tables:'
+p126
+sI2060
+S'            extra_fields = settings.extra_fields.get('
+p127
+sI2061
+S'                settings.table_group_name, []) + signature_list'
+p128
+ssg87
+S'(self=<gluon.tools.Auth object>, username=False, signature=False, enable_tokens=False, migrate=True, fake_migrate=False)'
+p129
+sg89
+S'define_tables'
+p130
+sa(dp131
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\base.py'
+p132
+sg68
+(dp133
+S'fields'
+p134
+S'(<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>)'
+p135
+sS'self'
+p136
+S'<DAL uri="postgres:******@localhost/sirius-web">'
+p137
+sS'args'
+p138
+S"{'fake_migrate': False, 'format': '%(first_name)s %(last_name)s (%(id)s)', 'migrate': True}"
+p139
+sS'tablename'
+p140
+S"'auth_user'"
+p141
+sS'table'
+p142
+g95
+sS'self.lazy_define_table'
+p143
+S'<bound method DAL.lazy_define_table of <DAL uri="postgres:******@localhost/sirius-web">>'
+p144
+ssg74
+I819
+sg75
+(dp145
+I814
+S'                    % (tablename,invalid_args))'
+p146
+sI815
+S'        if self._lazy_tables and tablename not in self._LAZY_TABLES:'
+p147
+sI816
+S'            self._LAZY_TABLES[tablename] = (tablename,fields,args)'
+p148
+sI817
+S'            table = None'
+p149
+sI818
+S'        else:'
+p150
+sI819
+S'            table = self.lazy_define_table(tablename,*fields,**args)'
+p151
+sI820
+S'        if not tablename in self.tables:'
+p152
+sI821
+S'            self.tables.append(tablename)'
+p153
+sI822
+S'        return table'
+p154
+sI823
+S''
+ssg87
+S'(self=<DAL uri="postgres:******@localhost/sirius-web">, tablename=\'auth_user\', *fields=(<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>), **args={\'fake_migrate\': False, \'format\': \'%(first_name)s %(last_name)s (%(id)s)\', \'migrate\': True})'
+p155
+sg89
+S'define_table'
+p156
+sa(dp157
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\base.py'
+p158
+sg68
+(dp159
+S'polymodel'
+p160
+S'None'
+p161
+ssg74
+I858
+sg75
+(dp162
+I853
+S'            try:'
+p163
+sI854
+S'                GLOBAL_LOCKER.acquire()'
+p164
+sI855
+S'                self._lastsql = self._adapter.create_table('
+p165
+sI856
+S'                    table,migrate=migrate,'
+p166
+sI857
+S'                    fake_migrate=fake_migrate,'
+p167
+sI858
+S'                    polymodel=polymodel)'
+p168
+sI859
+S'            finally:'
+p169
+sI860
+S'                GLOBAL_LOCKER.release()'
+p170
+sI861
+S'        else:'
+p171
+sI862
+S'            table._dbt = None'
+p172
+ssg87
+S'(self=<DAL uri="postgres:******@localhost/sirius-web">, tablename=\'auth_user\', *fields=(<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>), **args={\'fake_migrate\': False, \'format\': \'%(first_name)s %(last_name)s (%(id)s)\', \'migrate\': True})'
+p173
+sg89
+S'lazy_define_table'
+p174
+sa(dp175
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p176
+sg68
+(dp177
+S'query'
+p178
+S"'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY KE...usuario VARCHAR(512),\\n    data_nascimento DATE\\n);'"
+p179
+sS'self'
+p180
+S'<pydal.adapters.postgres.PostgreSQLAdapter object>'
+p181
+sS'table'
+p182
+S'<Table auth_user (id,first_name,last_name,email,...key,registration_id,img_usuario,data_nascimento)>'
+p183
+sS'self.create_sequence_and_triggers'
+p184
+S'<bound method PostgreSQLAdapter.create_sequence_...ydal.adapters.postgres.PostgreSQLAdapter object>>'
+p185
+ssg74
+I475
+sg75
+(dp186
+I470
+S'            if table._dbt:'
+p187
+sI471
+S"                self.log('timestamp: %s\\n%s\\n'"
+p188
+sI472
+S'                         % (datetime.datetime.today().isoformat(),'
+p189
+sI473
+S'                            query), table)'
+p190
+sI474
+S'            if not fake_migrate:'
+p191
+sI475
+S'                self.create_sequence_and_triggers(query,table)'
+p192
+sI476
+S'                table._db.commit()'
+p193
+sI477
+S'                # Postgres geom fields are added now,'
+p194
+sI478
+S'                # after the table has been created'
+p195
+sI479
+S'                for query in postcreation_fields:'
+p196
+ssg87
+S'(self=<pydal.adapters.postgres.PostgreSQLAdapter object>, table=<Table auth_user (id,first_name,last_name,email,...key,registration_id,img_usuario,data_nascimento)>, migrate=True, fake_migrate=False, polymodel=None)'
+p197
+sg89
+S'create_table'
+p198
+sa(dp199
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\postgres.py'
+p200
+sg68
+(dp201
+S'query'
+p202
+S"'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY KE...usuario VARCHAR(512),\\n    data_nascimento DATE\\n);'"
+p203
+sS'self'
+p204
+S'<pydal.adapters.postgres.PostgreSQLAdapter object>'
+p205
+sS'self.execute'
+p206
+S'<bound method PostgreSQLAdapter.execute of <pydal.adapters.postgres.PostgreSQLAdapter object>>'
+p207
+ssg74
+I94
+sg75
+(dp208
+I96
+S"    REGEX_URI = re.compile('^(?P<user>[^:@]+)(\\:(?P<password>[^@]*))?@(?P<host>[^\\:@]+)(\\:(?P<port>[0-9]+))?/(?P<db>[^\\?]+)(\\?sslmode=(?P<sslmode>.+))?$')"
+p209
+sI97
+S''
+sI98
+S"    def __init__(self, db,uri, pool_size=0, folder=None, db_codec ='UTF-8',"
+p210
+sI89
+S'    def create_sequence_and_triggers(self, query, table, **args):'
+p211
+sI90
+S'        # following lines should only be executed if table._sequence_name does not exist'
+p212
+sI91
+S"        # self.execute('CREATE SEQUENCE %s;' % table._sequence_name)"
+p213
+sI92
+S'        # self.execute("ALTER TABLE %s ALTER COLUMN %s SET DEFAULT NEXTVAL(\'%s\');" \\'
+p214
+sI93
+S'        #              % (table._tablename, table._fieldname, table._sequence_name))'
+p215
+sI94
+S'        self.execute(query)'
+p216
+sI95
+S''
+ssg87
+S"(self=<pydal.adapters.postgres.PostgreSQLAdapter object>, query='CREATE TABLE auth_user(\\n    id SERIAL PRIMARY KE...usuario VARCHAR(512),\\n    data_nascimento DATE\\n);', table=<Table auth_user (id,first_name,last_name,email,...key,registration_id,img_usuario,data_nascimento)>, **args={})"
+p217
+sg89
+S'create_sequence_and_triggers'
+p218
+sa(dp219
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\postgres.py'
+p220
+sg68
+(dp221
+S'a'
+S"[u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);']"
+p222
+sS'self'
+p223
+S'<pydal.adapters.postgres.PostgreSQLAdapter object>'
+p224
+sS'b'
+g21
+sS'BaseAdapter.execute'
+p225
+S'<unbound method BaseAdapter.execute>'
+p226
+sS'global BaseAdapter'
+p227
+S"<class 'pydal.adapters.base.BaseAdapter'>"
+p228
+ssg74
+I360
+sg75
+(dp229
+I355
+S''
+sI356
+S'    def execute(self, *a, **b):'
+p230
+sI357
+S'        if PY2 and self.driver_name == "pg8000":'
+p231
+sI358
+S'            a = list(a)'
+p232
+sI359
+S"            a[0] = a[0].decode('utf8')"
+p233
+sI360
+S'        return BaseAdapter.execute(self, *a, **b)'
+p234
+sI361
+S''
+sI362
+S''
+sI363
+S'class NewPostgreSQLAdapter(PostgreSQLAdapter):'
+p235
+sI364
+S"    drivers = ('psycopg2','pg8000')"
+p236
+ssg87
+S"(self=<pydal.adapters.postgres.PostgreSQLAdapter object>, *a=[u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);'], **b={})"
+p237
+sg89
+S'execute'
+p238
+sa(dp239
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p240
+sg68
+(dp241
+S'a'
+S"(u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);',)"
+p242
+sS'self'
+p243
+S'<pydal.adapters.postgres.PostgreSQLAdapter object>'
+p244
+sS'b'
+g21
+sS'self.log_execute'
+p245
+S'<bound method PostgreSQLAdapter.log_execute of <pydal.adapters.postgres.PostgreSQLAdapter object>>'
+p246
+ssg74
+I1378
+sg75
+(dp247
+I1376
+S''
+sI1377
+S'    def execute(self, *a, **b):'
+p248
+sI1378
+S'        return self.log_execute(*a, **b)'
+p249
+sI1379
+S''
+sI1380
+S'    def execute_test_query(self):'
+p250
+sI1381
+S'        return self.execute(self.test_query)'
+p251
+sI1382
+S''
+sI1373
+S'        self.db._timings.append((command,time.time()-t0))'
+p252
+sI1374
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p253
+sI1375
+S'        return ret'
+p254
+ssg87
+S"(self=<pydal.adapters.postgres.PostgreSQLAdapter object>, *a=(u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);',), **b={})"
+p255
+sg89
+g238
+sa(dp256
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p257
+sg68
+(dp258
+S'a'
+S"(u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);',)"
+p259
+sS'b'
+g21
+sS'self'
+p260
+S'<pydal.adapters.postgres.PostgreSQLAdapter object>'
+p261
+sS'ret'
+p262
+g95
+sS'self.cursor'
+p263
+S'<gluon.contrib.pg8000.core.Cursor instance>'
+p264
+sS'command'
+p265
+S"u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);'"
+p266
+sS'self.cursor.execute'
+p267
+S'<bound method Cursor.execute of <gluon.contrib.pg8000.core.Cursor instance>>'
+p268
+ssg74
+I1372
+sg75
+(dp269
+I1376
+S''
+sI1367
+S'            command = self.filter_sql_command(command)'
+p270
+sI1368
+S'        if self.db._debug:'
+p271
+sI1369
+S"            self.db.logger.debug('SQL: %s' % command)"
+p272
+sI1370
+S'        self.db._lastsql = command'
+p273
+sI1371
+S'        t0 = time.time()'
+p274
+sI1372
+S'        ret = self.cursor.execute(command, *a[1:], **b)'
+p275
+sI1373
+S'        self.db._timings.append((command,time.time()-t0))'
+p276
+sI1374
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p277
+sI1375
+S'        return ret'
+p278
+ssg87
+S"(self=<pydal.adapters.postgres.PostgreSQLAdapter object>, *a=(u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);',), **b={})"
+p279
+sg89
+S'log_execute'
+p280
+sa(dp281
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\contrib\\pg8000\\core.py'
+p282
+sg68
+(dp283
+S'self'
+p284
+S'<gluon.contrib.pg8000.core.Cursor instance>'
+p285
+sS'args'
+p286
+S'None'
+p287
+sS'self._c.execute'
+p288
+S'<bound method Connection.execute of <gluon.contrib.pg8000.core.Connection object>>'
+p289
+sS'self._c'
+p290
+S'<gluon.contrib.pg8000.core.Connection object>'
+p291
+sS'operation'
+p292
+S"u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);'"
+p293
+ssg74
+I573
+sg75
+(dp294
+I576
+S'                raise InterfaceError("Cursor closed")'
+p295
+sI577
+S'            elif self._c._sock is None:'
+p296
+sI568
+S'            self._c._lock.acquire()'
+p297
+sI569
+S'            self.stream = stream'
+p298
+sI570
+S''
+sI571
+S'            if not self._c.in_transaction and not self._c.autocommit:'
+p299
+sI572
+S'                self._c.execute(self, "begin transaction", None)'
+p300
+sI573
+S'            self._c.execute(self, operation, args)'
+p301
+sI574
+S'        except AttributeError:'
+p302
+sI575
+S'            if self._c is None:'
+p303
+ssg87
+S"(self=<gluon.contrib.pg8000.core.Cursor instance>, operation=u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);', args=None, stream=None)"
+p304
+sg89
+g238
+sa(dp305
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\contrib\\pg8000\\core.py'
+p306
+sg68
+(dp307
+S'cursor'
+p308
+S'<gluon.contrib.pg8000.core.Cursor instance>'
+p309
+sS'self.handle_messages'
+p310
+S'<bound method Connection.handle_messages of <gluon.contrib.pg8000.core.Connection object>>'
+p311
+sS'self'
+p312
+S'<gluon.contrib.pg8000.core.Connection object>'
+p313
+ssg74
+I1697
+sg75
+(dp314
+I1696
+S'        self._flush()'
+p315
+sI1697
+S'        self.handle_messages(cursor)'
+p316
+sI1698
+S'        if cursor.portal_suspended:'
+p317
+sI1699
+S'            if self.autocommit:'
+p318
+sI1700
+S'                raise InterfaceError('
+p319
+sI1701
+S'                    "With autocommit on, it\'s not possible to retrieve more "'
+p320
+sI1692
+S''
+sI1693
+S'        self._send_message(BIND, retval)'
+p321
+sI1694
+S'        self.send_EXECUTE(cursor)'
+p322
+sI1695
+S'        self._write(SYNC_MSG)'
+p323
+ssg87
+S"(self=<gluon.contrib.pg8000.core.Connection object>, cursor=<gluon.contrib.pg8000.core.Cursor instance>, operation=u'CREATE TABLE auth_user(\\n    id SERIAL PRIMARY...ario VARCHAR(512),\\n    data_nascimento DATE\\n);', vals=())"
+p324
+sg89
+g238
+sa(dp325
+g66
+S'D:\\CursoWeb2py\\web2py\\gluon\\contrib\\pg8000\\core.py'
+p326
+sg68
+(dp327
+S'self'
+p328
+S'<gluon.contrib.pg8000.core.Connection object>'
+p329
+sS'self.error'
+p330
+S'ProgrammingError(\'ERRO\', \'42P07\', \'rela\\xc3\\xa7\\xc3\\xa3o "auth_user" j\\xc3\\xa1 existe\')'
+p331
+ssg74
+I1774
+sg75
+(dp332
+I1769
+S'        except:'
+p333
+sI1770
+S'            self._close()'
+p334
+sI1771
+S'            raise'
+p335
+sI1772
+S''
+sI1773
+S'        if self.error is not None:'
+p336
+sI1774
+S'            raise self.error'
+p337
+sI1775
+S''
+sI1776
+S"    # Byte1('C') - Identifies the message as a close command."
+p338
+sI1777
+S'    # Int32 - Message length, including self.'
+p339
+sI1778
+S"    # Byte1 - 'S' for prepared statement, 'P' for portal."
+p340
+ssg87
+S'(self=<gluon.contrib.pg8000.core.Connection object>, cursor=<gluon.contrib.pg8000.core.Cursor instance>)'
+p341
+sg89
+S'handle_messages'
+p342
+sasS'pyver'
+p343
+S'Python 2.7.10: D:\\Python27\\python.exe (prefix: D:\\Python27)'
+p344
+sS'session'
+p345
+g61
+(S's\x1a\x00\x00\x00<div><table></table></div>'
+tRp346
+sS'etype'
+p347
+S"<class 'gluon.contrib.pg8000.ProgrammingError'>"
+p348
+sS'date'
+p349
+S'Sat Oct 17 22:18:41 2015'
+p350
+sS'response'
+p351
+g61
+(S's\xb9\x16\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x079B10C0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_sirius</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-c443cea5-3c0b-4211-a1fb-f2a2e5d4065c<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>bootstrap3_inline</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/index/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_sirius</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>D:\\CursoWeb2py\\web2py\\applications\\sirius\\sessions\\127.0.0.1-c443cea5-3c0b-4211-a1fb-f2a2e5d4065c</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>c0762cbf4baf7f9af97c051e7fcb8083</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-c443cea5-3c0b-4211-a1fb-f2a2e5d4065c</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_sirius</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>sirius</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>appadmin/index.html</div></td></tr></table></div>'
+tRp352
+sS'locals'
+p353
+(dp354
+S'cursor'
+p355
+S'<gluon.contrib.pg8000.core.Cursor instance>'
+p356
+sS'self'
+p357
+S'<gluon.contrib.pg8000.core.Connection object>'
+p358
+sg6
+S"'Z'"
+p359
+sS'data_len'
+p360
+S'5'
+sssS'traceback'
+p361
+S'Traceback (most recent call last):\n  File "D:\\CursoWeb2py\\web2py\\gluon\\restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "D:\\CursoWeb2py\\web2py\\applications\\sirius\\models\\db.py", line 67, in <module>\n    auth.define_tables(username=False, signature=False)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\tools.py", line 2057, in define_tables\n    format=\'%(first_name)s %(last_name)s (%(id)s)\'))\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\base.py", line 819, in define_table\n    table = self.lazy_define_table(tablename,*fields,**args)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\base.py", line 858, in lazy_define_table\n    polymodel=polymodel)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 475, in create_table\n    self.create_sequence_and_triggers(query,table)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\postgres.py", line 94, in create_sequence_and_triggers\n    self.execute(query)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\postgres.py", line 360, in execute\n    return BaseAdapter.execute(self, *a, **b)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1378, in execute\n    return self.log_execute(*a, **b)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1372, in log_execute\n    ret = self.cursor.execute(command, *a[1:], **b)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\contrib\\pg8000\\core.py", line 573, in execute\n    self._c.execute(self, operation, args)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\contrib\\pg8000\\core.py", line 1697, in execute\n    self.handle_messages(cursor)\n  File "D:\\CursoWeb2py\\web2py\\gluon\\contrib\\pg8000\\core.py", line 1774, in handle_messages\n    raise self.error\nProgrammingError: (\'ERRO\', \'42P07\', \'rela\\xc3\\xa7\\xc3\\xa3o "auth_user" j\\xc3\\xa1 existe\')\n'
+p362
+s.

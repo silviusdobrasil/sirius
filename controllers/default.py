@@ -81,6 +81,7 @@ def delete_disciplina():
 def insert_cidade():
 
     titulo = 'Cadastro de cidades'
+
     form = SQLFORM(Cidade)
 
     if form.process().accepted:
@@ -89,7 +90,7 @@ def insert_cidade():
         response.flash = 'Erros no formulário'
     else:
         response.flash = 'Preencha o formulário'
-    return dict(form=form)
+    return dict(form=form, titulo=titulo)
 
 def update_cidade():
     id_cidade = request.args(0, cast=int)
@@ -332,7 +333,7 @@ def update_comentario():
 
 def view_comentario():
     comentario = db(Comentario.id > 0).select()
-    return dict(mensagem=comentario)
+    return dict(comentario=comentario)
 
 def delete_comentario():
     id_comentario = request.args(0, cast=int)

@@ -1,10 +1,24 @@
+{{extend 'layout.html'}}
 <!DOCTYPE html>
 <html>
 <head lang="pt-br">
     <meta charset="UTF-8">
-    <title></title>
+    <link href="{{=URL('static','css/bootstrap.min.css')}}" rel="stylesheet">
+    <title>Teste</title>
 </head>
 <body>
-
+   <div class="panel panel-default">
+      <div class="media">
+          <div class="media-left">
+              <a href="#">
+                  <img class="media-object" src="">
+              </a>
+          </div>
+      </div>
+      <div class="panel-heading">{{=titulo}}</div>
+      <div class="panel-body">
+        {{=form}}
+      </div>
+    </div>
 </body>
 </html>

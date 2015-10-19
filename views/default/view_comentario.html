@@ -1,0 +1,24 @@
+{{extend 'layout.html'}}
+
+<h2>Comentários do Forum</h2>
+{{for cmt in comentario:}}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3>Usuário: {{=cmt.created_by.first_name}}</h3>
+    <h4>Forum: {{=cmt.postagem.titulo}}</h4>
+  </div>
+
+    <div class="media">
+      <div class="media-left">
+        <a href="#">
+          <img class="media-object" src="{{URL('download', args=cmt.created_by.img_usuario)}}" width="32" height="32">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading"></h4>
+        {{=cmt.mensagem}}
+      </div>
+    </div>
+{{pass}}
+</div>
+
