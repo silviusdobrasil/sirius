@@ -331,9 +331,11 @@ def update_comentario():
         response.flash = 'Registro pronto para ser atualizado'
     return dict(form=form)
 
+@auth.requires_login()
 def view_comentario():
     comentario = db(Comentario.id > 0).select()
-    return dict(comentario=comentario)
+    user = db(db.auth_user.id == Comentario.created_by).select(db.auth_user.ALL).first()['img_usuario']
+    return dict(comentario=comentario, user=user)
 
 def delete_comentario():
     id_comentario = request.args(0, cast=int)
