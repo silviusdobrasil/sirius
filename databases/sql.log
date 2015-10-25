@@ -225,3 +225,8 @@ ALTER TABLE auth_user ADD data_nascimento DATE;
 timestamp: 2015-10-16T20:55:58.450000
 ALTER TABLE auth_user ADD img_usuario VARCHAR(512);
 success!
+timestamp: 2015-10-20T00:14:46.980000
+ALTER TABLE auth_user ADD bio TEXT;
+timestamp: 2015-10-20T00:14:47.389000
+ALTER TABLE auth_user ADD cargo VARCHAR(512);
+success!

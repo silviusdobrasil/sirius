@@ -1,24 +1,24 @@
-{{extend 'layout.html'}}
-<!DOCTYPE html>
-<html>
-<head lang="pt-br">
-    <meta charset="UTF-8">
-    <link href="{{=URL('static','css/bootstrap.min.css')}}" rel="stylesheet">
-    <title>Teste</title>
-</head>
-<body>
-   <div class="panel panel-default">
-      <div class="media">
-          <div class="media-left">
-              <a href="#">
-                  <img class="media-object" src="">
-              </a>
-          </div>
-      </div>
-      <div class="panel-heading">{{=titulo}}</div>
-      <div class="panel-body">
-        {{=form}}
-      </div>
+{{extend 'base.html'}}
+{{=form.custom.begin}}
+
+    <div class="form-group">
+        <label class="control-label">Cep</label>
+        {{form.custom.widget.cep}}
     </div>
-</body>
-</html>
+    <div class="form-group">
+        <label class="control-label">Nome</label>
+        {{form.custom.widget.nome}}
+    </div>
+    <div class="form-group">
+        <label class="control-label">Uf</label>
+        {{form.custom.widget.cep}}
+    </div>
+    <div class="form-group">
+        <label>Select Example</label>
+        <select class="form-control">
+            <option>One Vale</option>
+
+        </select>
+    </div>
+
+{{=form.custom.end}}
