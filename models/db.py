@@ -58,12 +58,10 @@ auth = Auth(db)
 service = Service()
 plugins = PluginManager()
 
+#Campos extras na tabela user
 auth.settings.extra_fields['auth_user'] = [
-    Field('img_usuario','upload'),
-    Field('data_nascimento', 'date'),
-    Field('bio', 'text'),
-    Field('cargo', 'string')
-]
+    Field('avatar', 'upload'),
+    ]
 
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
@@ -75,10 +73,9 @@ mail.settings.sender = myconf.take('smtp.sender')
 mail.settings.login = myconf.take('smtp.login')
 
 ## configure auth policy
-auth.settings.registration_requires_verification = False #Default False
+auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
-auth.messages.invalid_login = 'Usuário ou senha estão incorretos!' # Altera mensagem de login caso seja inválido.
 
 #########################################################################
 ## Define your tables below (or better in another model file) for example

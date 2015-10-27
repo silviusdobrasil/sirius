@@ -1,0 +1,46 @@
+{{extend 'base.html'}}
+<head lang="pt-br">
+	<meta charset="utf-8">
+</head>
+
+{{=form.custom.begin}}
+		{{if form.errors.cep:}}
+					<div class="form-group has-error">
+						<label class="control-label" for="error">Cep</label>
+						{{form.elements('#cidades_cep')[0]['_placeholder']='Digite o cep'}}
+						{{=form.custom.widget.cep}}
+					</div>
+		{{else:}}
+					<div class='form-group'>
+						<label class="control-label">Cep</label>
+						{{=form.custom.widget.cep}}
+					</div>
+		{{pass}}
+
+				{{if form.errors.nome:}}
+					<div class="form-group has-error">
+						<label class="control-label" for="error">Nome</label>
+						{{=form.custom.widget.nome}}
+					</div>
+				{{else:}}
+					<div class='form-group'>
+						<label class="control-label">Nome</label>
+						{{=form.custom.widget.nome}}
+					</div>
+				{{pass}}
+
+				{{if form.errors.uf:}}
+					<div class="form-group has-error">
+						<label class="control-label" for="error">Uf</label>
+						{{=form.custom.widget.mensagem}}
+					</div>
+				{{else:}}
+					<div class='form-group'>
+						<label class="control-label">Uf</label>
+						{{=form.custom.widget.uf}}
+					</div>
+				{{pass}}
+
+				<input type="submit" value="Gravar" class="btn btn-primary">
+{{=form.custom.end}}
+

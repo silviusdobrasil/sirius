@@ -9,9 +9,14 @@
 #########################################################################
 
 def index():
-    mensagem = 'Sejam bem vindo, ao sistema de gestão escolar Sirius \n' \
-               'Informção e tecnologia, aliados à sua gestão!'
-    return dict(message=mensagem)
+    """
+    example action using the internationalization operator T and flash
+    rendered by views/default/index.html or views/generic.html
+
+    if you need a simple wiki simply replace the two lines below with:
+    return auth.wiki()
+    """
+    return dict(message=T('Welcome to web2py!'))
 
 
 def user():
@@ -51,328 +56,106 @@ def call():
     """
     return service()
 
-"""
- Definindo as funções do objeto Disciplina.
-"""
-
-@auth.requires_login()
-def insert_disciplina():
-    form = crud.create(Disciplina)
-    return dict(form=form)
-
-@auth.requires_login()
-def update_disciplina():
-    id_disciplina = request.args(0, cast=int)
-    form = crud.update(Disciplina, id_disciplina)
-    return dict(form=form)
-
-@auth.requires_login()
-def view_disciplina():
-    grid = SQLFORM.grid(Disciplina)
-    return dict(grid=grid)
-
-@auth.requires_login()
-def delete_disciplina():
-    id_disciplina = request.args(0, cast=int)
-    db(Disciplina.id == id_disciplina).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_disciplina'))
-############################### Fim das funções do objeto disciplina####################################################
-
-"""
- Definindo as funções do objeto Cidade.
-"""
-
-@auth.requires_login()
-def insert_cidade():
-
-    form = SQLFORM(Cidade)
-
+def contato():
+    response.subtitle += " -> Contato"
+    form = SQLFORM.factory(
+        Field('nome', requires=IS_NOT_EMPTY(), label='Nome'),
+        Field('email', requires=IS_EMAIL()),
+        Field('mensagem', 'text', requires=IS_NOT_EMPTY(), label='Mesagem')
+        )
     if form.process().accepted:
-        response.flash = 'Gravado com sucesso'
+        mail.send(
+            to=['protonfranklin@gmail.com'],
+            subject='Novo email de %s' %form.vars.nome,
+            reply_to=form.vars.email,
+            message=form.vars.mensagem,
+            )
+        session.flash = 'Mensagem enviada'
+        redirect(URL('index'))
     elif form.errors:
-        response.flash = 'Erros no formulário'
+        response.flash = 'Ops, algo errado no formulário'
     else:
         response.flash = 'Preencha o formulário'
+    return dict(form = form)
+
+def inserir_cidade():
+    response.subtitle += " -> Inserir cidades"
+    form = crud.create(Cidade)
+    return dict(form=form)
+
+
+# Será necessário criar um grupo chamado professor para acessar a rotina.
+@auth.requires_membership('professor')
+def inserir_notas():
+    response.subtitle += " -> Inserir notas"
+    form = crud.create(Notas)
+    return dict(form=form)
+
+@auth.requires_membership('professor')
+def novo_arquivo():
+    response.subtitle += " -> Enviar arquivos"
+    form = crud.create(Biblioteca)
     return dict(form=form)
 
 @auth.requires_login()
-def update_cidade():
-    id_cidade = request.args(0, cast=int)
+def nova_mensagem():
+    form = crud.create(Forum)
+    return dict(form=form)
 
-    form = SQLFORM(Cidade, id_cidade, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
+def forum():
+    response.subtitle += " -> Fórum"
+    posts = db(Forum.id>0).select() 
+    return dict(posts=posts)
+
+@auth.requires_login()
+def ver_mensagem():
+    id_mensagem = request.args(0, cast = int)
+    mensagem = db(db.forum.id == id_mensagem).select().first()
+
+    Comentarios.postagem.default = id_mensagem
+    Comentarios.postagem.writable = Comentarios.postagem.readable = False
+    form = crud.create(Comentarios)
+    coments = db(Comentarios.postagem == id_mensagem).select()
+    return dict(mensagem=mensagem, form=form, coments=coments)
+    
+@auth.requires_login()
+def notas():
+    response.subtitle += " -> Notas"
+    if request.post_vars.busca:
+        print request.post_vars
+        #notas = db(Notas.)
     else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
+        notas = db(Notas.id > 0).select()
+    return dict(notas=notas)
 
-@auth.requires_login()
-def view_cidade():
-    response.title += ' | Cidade' # Identifica o nome da aba da página
-    cidades = db(Cidade.id > 0).select()
-
-    return dict(cidades=cidades)
-
-@auth.requires_login()
-def delete_cidade():
-    id_cidade = request.args(0, cast=int)
-    db(Cidade.id == id_cidade).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_cidade'))
-
-############################### Fim das funções do objeto cidade########################################################
-"""
- Definindo as funções do objeto Aluno.
-"""
-
-@auth.requires_login()
-def insert_aluno():
-    form = SQLFORM(Aluno)
-
-    if form.process().accepted:
-        response.flash = 'Inserido com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Preencha o formulário'
-    return dict(form=form)
-
-@auth.requires_login()
-def update_aluno():
-    id_aluno = request.args(0, cast=int)
-
-    form = SQLFORM(Aluno, id_aluno, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
-
-@auth.requires_login()
-def view_aluno():
-    aluno = db(Aluno.id > 0).select()
-    return dict(mensagem=aluno)
-
-@auth.requires_login()
-def delete_aluno():
-    id_aluno = request.args(0, cast=int)
-    db(Aluno.id == id_aluno).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_aluno'))
-############################### Fim das funções do objeto aluno#########################################################
-"""
- Definindo as funções do objeto Professor.
-"""
-
-@auth.requires_login()
-def insert_professor():
-    form = SQLFORM(Professor)
-
-    if form.process().accepted:
-        response.flash = 'Inserido com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Preencha o formulário'
-    return dict(form=form)
-
-@auth.requires_login()
-def update_professor():
-    id_professor = request.args(0, cast=int)
-
-    form = SQLFORM(Professor, id_professor, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
-
-@auth.requires_login()
-def view_professor():
-    professor = db(Professor.id > 0).select()
-    return dict(mensagem=professor)
-
-@auth.requires_login()
-def delete_professor():
-    id_professor = request.args(0, cast=int)
-    db(Professor.id == id_professor).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_professor'))
-############################### Fim das funções do objeto professor#####################################################
-"""
- Definindo as funções do objeto Nota.
-"""
-@auth.requires_membership('Professor')
-def insert_nota():
-    form = SQLFORM(Nota)
-
-    if form.process().accepted:
-        response.flash = 'Inserido com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Preencha o formulário'
-    return dict(form=form)
-
-@auth.requires_login()
-def update_nota():
+def ver_notas():
+    response.subtitle += " -> Consultar notas"
     id_nota = request.args(0, cast=int)
+    total_notas = db(Notas.id > id_nota).count()
 
-    form = SQLFORM(Nota, id_nota, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
+    try:
+        pag = int(request.vars.pagina)
+        if pag <= 0:
+            redirect(URL('ver_notas', args=request.args, vars={'pagina':1}))
+        if total_notas % 5 == 0:
+            red = total_notas / 5
+            if pag > red:
+                redirect(URL('ver_notas', args=request.args, vars={'pagina': red}))
+        else:
+            red = total_notas / 5 + 1
+            if pag > red:
+                redirect(URL('ver_notas', args=request.args, vars={'pagina': red}))
 
-@auth.requires_login()
-def view_nota():
-    nota = db(Nota.id > 0).select()
-    return dict(mensagem=nota)
+    except TypeError:
+        redirect(URL('ver_notas', args=request.args, vars={'pagina':1}))
 
-@auth.requires_login()
-def delete_nota():
-    id_nota = request.args(0, cast=int)
-    db(Nota.id == id_nota).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_nota'))
+    inicio = (pag - 1) * 5
+    fim = pag * 5
+    notas = db(Notas.id > id_nota).select(limitby=(inicio,fim))
 
-############################### Fim das funções do objeto nota##########################################################
-"""
- Definindo as funções do objeto Biblioteca.
-"""
+    return dict(notas=notas, total_notas=total_notas)
 
-@auth.requires_login()
-def insert_biblioteca():
-    form = SQLFORM(Biblioteca)
-
-    if form.process().accepted:
-        response.flash = 'Inserido com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Preencha o formulário'
-    return dict(form=form)
-
-@auth.requires_login()
-def update_biblioteca():
-    id_biblioteca = request.args(0, cast=int)
-
-    form = SQLFORM(Biblioteca, id_biblioteca, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
-
-@auth.requires_login()
-def view_biblioteca():
-    biblioteca = db(Biblioteca.id > 0).select()
-    return dict(mensagem=biblioteca)
-
-@auth.requires_login()
-def delete_biblioteca():
-    id_biblioteca = request.args(0, cast=int)
-    db(Biblioteca.id == id_biblioteca).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_biblioteca'))
-
-
-############################### Fim das funções do objeto biblioteca####################################################
-"""
- Definindo as funções do objeto Forum.
-"""
-@auth.requires_login()
-def insert_forum():
-    form = SQLFORM(Forum)
-
-    if form.process().accepted:
-        response.flash = 'Inserido com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Preencha o formulário'
-    return dict(form=form)
-
-@auth.requires_login()
-def update_forum():
-    id_forum = request.args(0, cast=int)
-
-    form = SQLFORM(Forum, id_forum, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
-
-@auth.requires_login()
-def view_forum():
-    forum = db(Forum.id > 0).select()
-    return dict(forum=forum)
-
-@auth.requires_login()
-def delete_forum():
-    id_forum = request.args(0, cast=int)
-    db(Forum.id == id_forum).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_forum'))
-
-############################### Fim das funções do objeto Forum#########################################################
-"""
- Definindo as funções do objeto Comentario.
-"""
-
-@auth.requires_login()
-def insert_comentario():
-    form = SQLFORM(Comentario)
-
-    if form.process().accepted:
-        response.flash = 'Inserido com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Preencha o formulário'
-    return dict(form=form)
-
-@auth.requires_login()
-def update_comentario():
-    id_comentario = request.args(0, cast=int)
-    Comentario.postagem.default = id_comentario
-    Comentario.postagem.writable = False
-    Comentario.postagem.readable = True
-    form = SQLFORM(Comentario, id_comentario, showid=False)
-    if form.process().accepted:
-        response.flash = 'Atualizado com sucesso'
-    elif form.errors:
-        response.flash = 'Erros no formulário'
-    else:
-        response.flash = 'Registro pronto para ser atualizado'
-    return dict(form=form)
-
-@auth.requires_login()
-def view_comentario():
-    comentario = db(Comentario.id > 0).select()
-    return dict(comentario=comentario)
-
-@auth.requires_login()
-def delete_comentario():
-    id_comentario = request.args(0, cast=int)
-    db(Comentario.id == id_comentario).delete()
-    response.flash = 'Apagado com sucesso'
-    redirect(URL('view_comentario'))
-
-############################### Fim das funções do objeto Comentario####################################################
-
+def biblioteca():
+    response.subtitle += " -> Biblioteca"
+    arquivos = db(Biblioteca.id > 0).select()
+    return dict(arquivos=arquivos)

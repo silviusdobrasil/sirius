@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -10,27 +10,23 @@
         <![endif]-->
     <title>{{=response.title}}</title>
     <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="{{=URL('static', 'css/bootstrap.css')}}" rel="stylesheet" />
+    <link href="{{=URL('static', 'css/bootstrap.min.css')}}" rel="stylesheet" />
     <!-- FONT AWESOME ICONS  -->
     <link href="{{=URL('static', 'css/font-awesome.css')}}" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="{{=URL('static', 'css/style.css')}}" rel="stylesheet" />
-     <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body>
+    {{include 'web2py_ajax.html'}} <!-- this includes jquery.js, calendar.js/.css and web2py.js -->
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <strong>Email: </strong>silviusdobrasil@gmail.com
+                    <strong>Email: </strong>contato@silviusdobrasil.com.br
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+55-75-9982-4430
+                    <strong>Support: </strong>+55-(75)-9678-4400
                 </div>
+
             </div>
         </div>
     </header>
@@ -43,13 +39,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{=URL('user', args='login')}}">
-                    <h1 style="color:white">Sirius-Web</h1>
+                <a class="navbar-brand" href="index.html">
+
+                    <h3 style="color: white">SiriusWeb</h3>
                 </a>
+
             </div>
+
             <div class="left-div">
                 <div class="user-settings-wrapper">
                     <ul class="nav">
+
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
@@ -58,26 +58,26 @@
                             <div class="dropdown-menu dropdown-settings">
                                 <div class="media">
                                     <a class="media-left" href="#">
-                                        <img src="{{=URL('download',args=auth.user.img_usuario)}}" alt="Sirius" class="img-rounded" width="50" height="50" />
+                                        <img src="{{=URL('download', args=auth.user.avatar)}}" alt="" class="img-rounded" />
                                     </a>
                                     <div class="media-body">
-                                        <h4 class="media-heading">{{=auth.user.first_name}}</h4>
-                                        <h4>Bio</h4>
-                                        <h5>{{=auth.user.bio}}</h5>
-                                        <h4>Função</h4>
-                                        <h5>{{=auth.user.cargo}}</h5>
+                                        <h4 class="media-heading">{{=auth.user.first_name}} </h4>
+                                        <h5>Developer & Designer</h5>
+
                                     </div>
                                 </div>
                                 <hr />
-                                <h5><strong></strong></h5>
-
+                                <h5><strong>Personal Bio : </strong></h5>
+                                Quem eu sou.
                                 <hr />
-                                <a href="{{=URL('user', args='login')}}" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="{{=URL('user', args='logout')}}" class="btn btn-danger btn-sm">Logout</a>
+                                <a href="https://github.com/silviusdobrasil" class="btn btn-info btn-sm" target="_blank">Full Profile</a>&nbsp;
+                                <a href="{{=URL('default', 'user/logout')}}" class="btn btn-danger btn-sm">Logout</a>
                             </div>
                             {{pass}}
                         </li>
-                    </ul>
 
+
+                    </ul>
                 </div>
             </div>
         </div>
@@ -85,74 +85,59 @@
     <!-- LOGO HEADER END-->
     <section class="menu-section">
         <div class="container">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a  href="{{=URL('index')}}">Home</a></li>
-                            <li><a  href="{{=URL('view_nota')}}">Notas</a></li>
-                            <li><a  href="{{=URL('view_comentario')}}">Comentários</a></li>
-                            <li><a  href="{{=URL('view_forum')}}">Fórum</a></li>
-                            <li><a  href="{{=URL('view_biblioteca')}}">Biblioteca</a></li>
-                            <li><a  href="{{=URL('insert_cidade')}}">Cidades</a></li>
+                            {{if response.menu:}}
+                                {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}
+                            {{pass}}
                         </ul>
                     </div>
                 </div>
+
             </div>
+        </div>
     </section>
     <!-- MENU SECTION END-->
-    <div class="col-md-12">
-        <h4 class="page-head-line">{{=response.title}} {{=response.subtitle}}</h4>
-    </div>
-    <div class="row">
-             <div class="col-md-2 col-sm-3 col-xs-5">
-               <div class="dashboard-div-wrapper bk-clr-three">
-                    <i  class="fa fa-check dashboard-div-icon" ></i>
-                     <a href="{{=URL('view_nota', args=0)}}"><h5>Notas</h5></a>
+    <div class="flash alert alert-dismissable">{{=response.flash or ''}}</div>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-head-line">
+                        {{block title}}
+                            {{=response.title}}
+                                <small>{{=response.subtitle or ''}}</small>
+                        {{end}}
+                    </h4>
                 </div>
             </div>
-            <div class="col-md-2 col-sm-3 col-xs-5">
-                <div class="dashboard-div-wrapper bk-clr-three">
-                    <i  class="fa fa-check dashboard-div-icon" ></i>
-                     <a href="{{=URL('view_comentario',args=0)}}"><h5>Comentários</h5></a>
+            <div class="row">
+                <div class="col-md-12">
+                    {{include}}
                 </div>
-            </div>
-             <div class="col-md-2 col-sm-3 col-xs-5">
-                <div class="dashboard-div-wrapper bk-clr-three">
-                    <i  class="fa fa-check dashboard-div-icon" ></i>
-                    <a href="{{=URL('view_forum',args=0)}}"><h5>Fórum</h5></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 col-xs-5">
-                <div class="dashboard-div-wrapper bk-clr-three">
-                    <i  class="fa fa-check dashboard-div-icon" ></i>
-                     <a href="{{=URL('view_biblioteca', args=0)}}"><h5>Bibliotecas</h5></a>
-                </div>
-            </div>
-            <div class="col-md-2 col-sm-3 col-xs-5">
-                   <div class="dashboard-div-wrapper bk-clr-three">
-                    <i  class="fa fa-check dashboard-div-icon" ></i>
-                         <a href="{{=URL('insert_cidade', args=0)}}"><h5>Cidades</h5></a>
-                    </div>
-            </div>
-    </div>
 
+            </div>
+        </div>
+    </div>
     <!-- CONTENT-WRAPPER SECTION END-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    &copy; 2015 | Layout By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a> | Developed By: <a href="https://github.com/silviusdobrasil">Silvius do Brasil</a>
+                    <a href=""></a>
+                </div>
 
-
+            </div>
+        </div>
+    </footer>
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
-    <script src="{{=URL('static','js/jquery.js')}}"></script>
+    <script src="{{=URL('static', 'js/jquery.js')}}"></script>
     <!-- BOOTSTRAP SCRIPTS  -->
     <script src="{{=URL('static', 'js/bootstrap.min.js')}}"></script>
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        &copy; 2015 Todos os direitos reservados | <a href="http://www.silviusdobrasil.com.br/" target="_blank">Silvus do Brasil Ltda</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
 </body>
 </html>

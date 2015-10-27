@@ -25,10 +25,14 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    (T('Home'), False, URL('default', 'index'), []),
+    (T('Forum'), False, URL('default', 'forum'), []),
+    (T('Notas'), False, URL('default', 'notas'), []),
+    (T('Biblioteca'), False, URL('default', 'biblioteca'), []),
+    (T('Contato'), False, URL('default', 'contato'), []),
 ]
 
-DEVELOPMENT_MENU = True
+DEVELOPMENT_MENU = False
 
 #########################################################################
 ## provide shortcuts for development. remove in production

@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.AttributeError'> 'function' object has no attribute '_db'"
+p3
+sS'layer'
+p4
+S'/home/volney/CursoWeb2Py/app_curso/applications/Escola/controllers/default.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n# this file is released under public domain and you can use without limitations\n\n#########################################################################\n## This is a sample controller\n## - index is the default action of any application\n## - user is required for authentication and authorization\n## - download is for downloading files uploaded in the db (does streaming)\n#########################################################################\n\ndef index():\n    """\n    example action using the internationalization operator T and flash\n    rendered by views/default/index.html or views/generic.html\n\n    if you need a simple wiki simply replace the two lines below with:\n    return auth.wiki()\n    """\n    return dict(message=T(\'Welcome to web2py!\'))\n\n\ndef user():\n    """\n    exposes:\n    http://..../[app]/default/user/login\n    http://..../[app]/default/user/logout\n    http://..../[app]/default/user/register\n    http://..../[app]/default/user/profile\n    http://..../[app]/default/user/retrieve_password\n    http://..../[app]/default/user/change_password\n    http://..../[app]/default/user/manage_users (requires membership in\n    http://..../[app]/default/user/bulk_register\n    use @auth.requires_login()\n        @auth.requires_membership(\'group name\')\n        @auth.requires_permission(\'read\',\'table name\',record_id)\n    to decorate functions that need access control\n    """\n    return dict(form=auth())\n\n\n@cache.action()\ndef download():\n    """\n    allows downloading of uploaded files\n    http://..../[app]/default/download/[filename]\n    """\n    return response.download(request, db)\n\n\ndef call():\n    """\n    exposes services. for example:\n    http://..../[app]/default/call/jsonrpc\n    decorate with @services.jsonrpc the functions to expose\n    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv\n    """\n    return service()\n\ndef contato():\n    form = SQLFORM.factory(\n        Field(\'nome\', requires=IS_NOT_EMPTY(), label=\'Nome\'),\n        Field(\'email\', requires=IS_EMAIL()),\n        Field(\'mensagem\', \'text\', requires=IS_NOT_EMPTY(), label=\'Mesagem\')\n        )\n    if form.process().accepted:\n        session.flash = \'Mensagem enviada\'\n        redirect(URL(\'index\'))\n    elif form.errors:\n        response.flash = \'Ops, algo errado no formul\xc3\xa1rio\'\n    else:\n        response.flash = \'Preencha o formul\xc3\xa1rio\'\n    return dict(form = form)\n\ndef inserir_notas():\n    form = crud.create(notas)\n    return dict(form=form)\n\ndef novo_arquivo():\n    form = crud.create(biblioteca)\n    return dict(form=form)\n\ndef nova_mensagem():\n    form = crud.create(forum)\n    return dict(form=form)\n\ndef forum():\n    form = SQLFORM.grid(forum)\n    return dict(form=form)\n\ndef notas():\n    form = SQLFORM.grid(notas)\n    return dict(form=form)\n\ndef biblioteca():\n    form = SQLFORM.grid(biblioteca)\n    return dict(form=form)\nresponse._vars=response._caller(notas)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/volney/CursoWeb2Py/app_curso/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/volney/CursoWeb2Py/app_curso/applications/Escola/controllers/default.py", line 97, in <module>\n  File "/home/volney/CursoWeb2Py/app_curso/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/volney/CursoWeb2Py/app_curso/applications/Escola/controllers/default.py", line 91, in notas\n    form = SQLFORM.grid(notas)\n  File "/home/volney/CursoWeb2Py/app_curso/gluon/sqlhtml.py", line 2046, in grid\n    db = query._db\nAttributeError: \'function\' object has no attribute \'_db\'\n'
+p11
+s.

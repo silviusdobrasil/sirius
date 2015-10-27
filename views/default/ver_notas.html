@@ -1,0 +1,35 @@
+{{extend 'base.html'}}
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Professor</th>
+                <th>Aluno</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{for nota in notas:}}
+            <tr>
+                <td>{{=nota.professor.first_name}} {{=nota.professor.last_name}}</td>
+                <td>{{=nota.aluno.first_name}} {{=nota.aluno.last_name}}</td>
+                <td>{{=nota.nota}}</td>
+            </tr>
+            {{pass}}
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pager">
+        {{if int(request.vars.pagina) != 1:}}
+            <li class="previous"><a href="{{=URL('ver_notas', args=request.args,
+            vars={'pagina':int(request.vars.pagina)-1})}}" ><span aria-hidden="true">&larr;</span>Anterior</a></li>
+        {{pass}}
+
+        {{if int(request.vars.pagina) < total_notas/5.0:}}
+            <li class="next"><a href="{{=URL('ver_notas', args=request.args,
+            vars={'pagina':int(request.vars.pagina)+1})}}" >Próximo<span aria-hidden="true">&rarr;</span></a></li>
+        {{pass}}
+    </ul>
+</nav>

@@ -1,59 +1,4 @@
-timestamp: 2015-10-16T19:50:44.697000
-CREATE TABLE auth_user(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name CHAR(128),
-    last_name CHAR(128),
-    email CHAR(512),
-    password CHAR(512),
-    registration_key CHAR(512),
-    reset_password_key CHAR(512),
-    registration_id CHAR(512)
-);
-success!
-timestamp: 2015-10-16T19:50:44.775000
-CREATE TABLE auth_group(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    role CHAR(512),
-    description TEXT
-);
-success!
-timestamp: 2015-10-16T19:50:44.853000
-CREATE TABLE auth_membership(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T19:50:44.931000
-CREATE TABLE auth_permission(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
-    name CHAR(512),
-    table_name CHAR(512),
-    record_id INTEGER
-);
-success!
-timestamp: 2015-10-16T19:50:45.010000
-CREATE TABLE auth_event(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    time_stamp TIMESTAMP,
-    client_ip CHAR(512),
-    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    origin CHAR(512),
-    description TEXT
-);
-success!
-timestamp: 2015-10-16T19:50:45.103000
-CREATE TABLE auth_cas(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    created_on TIMESTAMP,
-    service CHAR(512),
-    ticket CHAR(512),
-    renew CHAR(1)
-);
-success!
-timestamp: 2015-10-16T20:18:44.827000
+timestamp: 2015-10-25T21:23:46.736000
 CREATE TABLE auth_user(
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(128),
@@ -62,24 +7,37 @@ CREATE TABLE auth_user(
     password VARCHAR(512),
     registration_key VARCHAR(512),
     reset_password_key VARCHAR(512),
-    registration_id VARCHAR(512)
+    registration_id VARCHAR(512),
+    avatar VARCHAR(512)
+);
+timestamp: 2015-10-25T21:24:11.714000
+CREATE TABLE auth_user(
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    avatar VARCHAR(512)
 );
 success!
-timestamp: 2015-10-16T20:18:45.036000
+timestamp: 2015-10-25T21:24:11.890000
 CREATE TABLE auth_group(
     id SERIAL PRIMARY KEY,
     role VARCHAR(512),
     description TEXT
 );
 success!
-timestamp: 2015-10-16T20:18:45.102000
+timestamp: 2015-10-25T21:24:11.953000
 CREATE TABLE auth_membership(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2015-10-16T20:18:45.140000
+timestamp: 2015-10-25T21:24:12.014000
 CREATE TABLE auth_permission(
     id SERIAL PRIMARY KEY,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -88,7 +46,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2015-10-16T20:18:45.207000
+timestamp: 2015-10-25T21:24:12.089000
 CREATE TABLE auth_event(
     id SERIAL PRIMARY KEY,
     time_stamp TIMESTAMP,
@@ -98,7 +56,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2015-10-16T20:18:45.283000
+timestamp: 2015-10-25T21:24:12.172000
 CREATE TABLE auth_cas(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -108,11 +66,27 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2015-10-16T20:18:45.379000
-CREATE TABLE disciplinas(
+timestamp: 2015-10-25T21:24:12.261000
+CREATE TABLE notas(
     id SERIAL PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    ch INTEGER NOT NULL,
+    nota FLOAT,
+    aluno INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  NOT NULL ,
+    professor INTEGER REFERENCES auth_user (id) ON DELETE NO ACTION  
+);
+success!
+timestamp: 2015-10-25T21:24:12.303000
+CREATE TABLE biblioteca(
+    id SERIAL PRIMARY KEY,
+    arquivo VARCHAR(512) NOT NULL,
+    professor INTEGER REFERENCES auth_user (id) ON DELETE NO ACTION  ,
+    titulo VARCHAR(512) NOT NULL
+);
+success!
+timestamp: 2015-10-25T21:24:12.379000
+CREATE TABLE forum(
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(512) NOT NULL,
+    mensagem TEXT NOT NULL,
     is_active CHAR(1),
     created_on TIMESTAMP,
     created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -120,11 +94,23 @@ CREATE TABLE disciplinas(
     modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2015-10-16T20:18:45.421000
+timestamp: 2015-10-25T21:24:12.463000
+CREATE TABLE comentarios(
+    id SERIAL PRIMARY KEY,
+    mensagem TEXT NOT NULL,
+    postagem INTEGER REFERENCES forum (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2015-10-25T22:18:37.378000
 CREATE TABLE cidades(
     id SERIAL PRIMARY KEY,
-    cep VARCHAR(8),
-    nome VARCHAR(50),
+    cep VARCHAR(512),
+    nome VARCHAR(512),
     uf VARCHAR(2),
     is_active CHAR(1),
     created_on TIMESTAMP,
@@ -132,101 +118,4 @@ CREATE TABLE cidades(
     modified_on TIMESTAMP,
     modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
 );
-success!
-timestamp: 2015-10-16T20:18:45.462000
-CREATE TABLE alunos(
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(512) NOT NULL,
-    cidade INTEGER REFERENCES cidades (id) ON DELETE NO ACTION  NOT NULL ,
-    endereco VARCHAR(512) NOT NULL,
-    numero VARCHAR(512) NOT NULL,
-    data_nasc DATE NOT NULL,
-    tel VARCHAR(512) NOT NULL,
-    email VARCHAR(512) NOT NULL,
-    is_active CHAR(1),
-    created_on TIMESTAMP,
-    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    modified_on TIMESTAMP,
-    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T20:18:45.529000
-CREATE TABLE professores(
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(512) NOT NULL,
-    cidade INTEGER REFERENCES cidades (id) ON DELETE NO ACTION  NOT NULL ,
-    endereco VARCHAR(512) NOT NULL,
-    numero VARCHAR(512) NOT NULL,
-    data_nasc DATE NOT NULL,
-    tel VARCHAR(512) NOT NULL,
-    email VARCHAR(512) NOT NULL,
-    is_active CHAR(1),
-    created_on TIMESTAMP,
-    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    modified_on TIMESTAMP,
-    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T20:18:45.687000
-CREATE TABLE notas(
-    id SERIAL PRIMARY KEY,
-    aluno INTEGER REFERENCES alunos (id) ON DELETE CASCADE  NOT NULL ,
-    professor INTEGER REFERENCES professores (id) ON DELETE NO ACTION  ,
-    disciplina INTEGER REFERENCES disciplinas (id) ON DELETE NO ACTION  ,
-    unidade VARCHAR(512) NOT NULL,
-    nota FLOAT,
-    is_active CHAR(1),
-    created_on TIMESTAMP,
-    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    modified_on TIMESTAMP,
-    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T20:18:45.752000
-CREATE TABLE bibliotecas(
-    id SERIAL PRIMARY KEY,
-    arquivo VARCHAR(512) NOT NULL,
-    disciplina INTEGER REFERENCES disciplinas (id) ON DELETE NO ACTION  ,
-    professor INTEGER REFERENCES professores (id) ON DELETE NO ACTION  ,
-    is_active CHAR(1),
-    created_on TIMESTAMP,
-    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    modified_on TIMESTAMP,
-    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T20:18:45.817000
-CREATE TABLE foruns(
-    id SERIAL PRIMARY KEY,
-    titulo VARCHAR(512) NOT NULL,
-    disciplina INTEGER REFERENCES disciplinas (id) ON DELETE NO ACTION  ,
-    mensagem TEXT NOT NULL,
-    is_active CHAR(1),
-    created_on TIMESTAMP,
-    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    modified_on TIMESTAMP,
-    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T20:18:45.888000
-CREATE TABLE comentarios(
-    id SERIAL PRIMARY KEY,
-    postagem INTEGER REFERENCES foruns (id) ON DELETE NO ACTION  NOT NULL ,
-    mensagem TEXT NOT NULL,
-    is_active CHAR(1),
-    created_on TIMESTAMP,
-    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
-    modified_on TIMESTAMP,
-    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
-);
-success!
-timestamp: 2015-10-16T20:55:58.221000
-ALTER TABLE auth_user ADD data_nascimento DATE;
-timestamp: 2015-10-16T20:55:58.450000
-ALTER TABLE auth_user ADD img_usuario VARCHAR(512);
-success!
-timestamp: 2015-10-20T00:14:46.980000
-ALTER TABLE auth_user ADD bio TEXT;
-timestamp: 2015-10-20T00:14:47.389000
-ALTER TABLE auth_user ADD cargo VARCHAR(512);
 success!

@@ -1,6 +1,41 @@
 {{extend 'base.html'}}
 
 {{block title}}
-  {{=response.title}} <small>{{=response.subtitle}}</small>
+  {{=response.title}}
+    <small>{{=response.subtitle or ''}}</small>
 {{end}}
 
+<div class="col-md-2 col-sm-2 col-xs-6">
+  <div class="dashboard-div-wrapper bk-clr-four">
+    <i  class="fa fa-check dashboard-div-icon" ></i>
+    <a style="color: #fff" href="{{=URL('notas')}}"> <h5>NOTAS</h5> </a>
+  </div>
+</div>
+
+<div class="col-md-2 col-sm-3 col-xs-6">
+  <div class="dashboard-div-wrapper bk-clr-four">
+    <i  class="fa fa-check dashboard-div-icon" ></i>
+      <a style="color: #fff" href="{{=URL('forum')}}"> <h5>FÓRUM</h5> </a>
+  </div>
+</div>
+
+<div class="col-md-2 col-sm-3 col-xs-6">
+  <div class="dashboard-div-wrapper bk-clr-four">
+    <i  class="fa fa-check dashboard-div-icon" ></i>
+        <a style="color: #fff" href="{{=URL('biblioteca')}}"> <h5>BIBLIOTECA</h5> </a>
+  </div>
+</div>
+
+<div class="col-md-2 col-sm-3 col-xs-6">
+  <div class="dashboard-div-wrapper bk-clr-four">
+    <i  class="fa fa-check dashboard-div-icon" ></i>
+        <a style="color: #fff" href="{{=URL('contato')}}"> <h5>CONTATO</h5> </a>
+  </div>
+</div>
+
+<div class="col-md-2 col-sm-3 col-xs-6">
+  <div class="dashboard-div-wrapper bk-clr-four">
+    <i  class="fa fa-check dashboard-div-icon" ></i>
+        <a style="color: #fff" href="{{=URL('inserir_cidade')}}"> <h5>CIDADES</h5> </a>
+  </div>
+</div>

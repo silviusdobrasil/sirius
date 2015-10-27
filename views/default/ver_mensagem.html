@@ -1,0 +1,33 @@
+{{extend 'base.html'}}
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<img src="{{=URL('download', args=mensagem.created_by.avatar)}}" alt="Avatar do usuário" width='64' height='64'>
+		<h4>{{=mensagem.titulo}}</h4>	
+	</div>
+	<div class="panel-body">
+	{{=mensagem.mensagem}}
+	</div>
+</div>
+
+{{for c in coments:}}
+	<div class="media">
+	  <div class="media-left">
+	    <a href="#">
+	      <img class="media-object" src="{{=URL('download', args=c.created_by.avatar)}}" alt="Avatar do usuário" width='64' height='64'>
+	    </a>
+	  </div>
+	  <div class="media-body">
+	    <h4 class="media-heading">{{=c.created_by.first_name}} respondeu:</h4>
+	    {{=c.mensagem}}
+	  </div>
+</div>
+{{pass}}
+
+<br><br>
+<div class="panel panel-default">
+  <div class="panel-heading">Responder</div>
+  <div class="panel-body">
+  	{{=form}}
+  </div>
+</div>

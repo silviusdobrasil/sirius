@@ -1,0 +1,11 @@
+{{extend 'base.html'}}
+
+{{cores = ['one', 'two', 'three', 'four']}}
+{{for arquivo in arquivos:}}
+	<div class="col-md-3 col-sm-3 col-xs-6">
+		<div class="dashboard-div-wrapper bk-clr-{{=cores[0]}}">
+		    <i  class="fa fa-book dashboard-div-icon" ></i>
+		    <a style="color: #fff" href="{{=URL('download', args=arquivo.arquivo)}}"> <h5>{{=arquivo.titulo}}</h5> </a>
+	    </div>
+	</div>
+{{pass}}
